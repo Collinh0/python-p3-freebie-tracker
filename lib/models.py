@@ -15,9 +15,28 @@ class Company(Base):
     id = Column(Integer(), primary_key=True)
     name = Column(String())
     founding_year = Column(Integer())
+    freebies = relationship("freebie", back_populates="company")
 
     def __repr__(self):
         return f'<Company {self.name}>'
+    
+@property
+def devs(self):
+    return list({f.dev for f in self.freebies})
+
+def give_freebie(self, dev, item_name, value):
+    freebie = Freebie(item_name=item_name,
+                     value=value,
+                     company=self,
+                     dev=dev
+     )
+    
+    #self.freebies.append(freebie)
+    return "new_freebie"
+
+@classmethod
+def oldest_company(cls, session):
+    return session.query(cls).order_by(cls.founding_year).firdt()
 
 class Dev(Base):
     __tablename__ = 'devs'
