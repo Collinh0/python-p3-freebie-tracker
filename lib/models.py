@@ -44,5 +44,20 @@ class Dev(Base):
     id = Column(Integer(), primary_key=True)
     name= Column(String())
 
+    freebies = relationship("Freebie", back_populates= "dev")
+
     def __repr__(self):
         return f'<Dev {self.name}>'
+
+@property 
+def companies(self):
+    return list({f.item_name for f in self.freebies})
+
+def give_away(self, other_dev, freebie):
+    if freebie in self.freebies:
+        freebie.dev = other_dev
+
+def recieved_one(self, item_name):
+    return any(f.item_name == item_name for f in self.freebies)
+
+
