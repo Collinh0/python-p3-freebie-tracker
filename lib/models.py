@@ -60,4 +60,21 @@ def give_away(self, other_dev, freebie):
 def recieved_one(self, item_name):
     return any(f.item_name == item_name for f in self.freebies)
 
+class Freebie(Base):
+    __tablename__ = 'freebies'
+
+    id = Column(Integer(), primary_key=True)
+    item_name = Column(String())
+    value = Column(Integer())
+
+    dev_id = Column(Integer(), ForeignKey('devs.id'))
+    company_id = Column(Integer(), ForeignKey('companies.id'))
+
+    
+    dev = relationship("Dev", back_populates="freebies")
+    company = relationship("Company", back_populates="freebies") #Relationships
+
+    def print_details(self):
+        return f"{self.dev.name} owns a {self.item_name} from {self.company.name}"
+
 
